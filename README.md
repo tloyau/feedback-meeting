@@ -49,14 +49,14 @@ Feedback Meeting uses MongoDB database. Follow these steps in order to run the p
  5.  Add a new codec followed this schema : 
 ```
 {
-	 "systemName": "XXX",
-	 "macAddress": "XX:XX:XX:XX:XX:XX",
-	 "ipAddress": "XX.XXX.XXX.XXX",
-	 "productType": "XXX",
-	 "username": "XXX",
-	 "password": "XXX",
-	 "firmware": "XXX",
-	 "uri": "XXX"
+	"systemName": "XXX",
+	"macAddress": "XX:XX:XX:XX:XX:XX",
+	"ipAddress": "XX.XXX.XXX.XXX",
+	"productType": "XXX",
+	"username": "XXX",
+	"password": "XXX",
+	"firmware": "XXX",
+	"uri": "XXX"
 }
 ```
 You can add as many codecs as you want.
@@ -66,7 +66,7 @@ You can add as many codecs as you want.
 
 ### Run the project
  You can now run the project. The Node.js server will register HttpFeedbacks for you.
-```
+``` bash
 # build for production with minification
 npm run build
 ```
