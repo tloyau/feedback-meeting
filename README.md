@@ -64,6 +64,9 @@ You can add as many codecs as you want.
 ### Environment variables
  Create now a `.env` file at the root of the project and fill the appropriate fields. I attached an example in the repository : `.env.example`
 
+### Logs
+ Before run the project, create a folder named `log`. The logs will be added to this folder in the future.
+
 ### Run the project
  You can now run the project. The Node.js server will register HttpFeedbacks for you.
 ```
