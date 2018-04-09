@@ -47,16 +47,16 @@ Feedback Meeting uses MongoDB database. Follow these steps in order to run the p
  3. Create two collections : `codecs` and `calls`
  4. Go to `codecs` collection
  5.  Add a new codec followed this schema : 
-```
+``` json
 {
-	"systemName": "XXX",
-	"macAddress": "XX:XX:XX:XX:XX:XX",
-	"ipAddress": "XX.XXX.XXX.XXX",
-	"productType": "XXX",
-	"username": "XXX",
-	"password": "XXX",
-	"firmware": "XXX",
-	"uri": "XXX"
+    "systemName": "XXX",
+    "macAddress": "XX:XX:XX:XX:XX:XX",
+    "ipAddress": "XX.XXX.XXX.XXX",
+    "productType": "XXX",
+    "username": "XXX",
+    "password": "XXX",
+    "firmware": "XXX",
+    "uri": "XXX"
 }
 ```
 You can add as many codecs as you want.
