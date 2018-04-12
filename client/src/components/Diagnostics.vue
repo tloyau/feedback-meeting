@@ -188,12 +188,17 @@ export default {
     VueJsonPretty
   },
   props: ['codec'],
-  created () {
-    this.getDiagnostics()
-  },
   computed: {
     urlCodec () {
       return 'http://' + this.codec.ipAddress 
+    }
+  },
+  created () {
+    this.getDiagnostics()
+  },
+  watch: {
+    codec (val) {
+      this.getDiagnostics()
     }
   },
   methods: {

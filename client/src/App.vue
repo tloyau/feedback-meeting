@@ -14,6 +14,9 @@
       </v-menu>
       <v-spacer></v-spacer>
       <v-btn @click="dialogCalls = true" color="teal" class="mr-3">Liste des Appels</v-btn>
+      <v-toolbar-items>
+        <v-btn flat @click="goToGitHub">Github Repo</v-btn>
+      </v-toolbar-items>
     </v-toolbar>
     <v-content>
       <v-container fluid grid-list-lg fill-height>
@@ -58,6 +61,9 @@
   }
   .flex-with-grow {
     flex: 1 1 auto !important;
+  }
+  .list__tile {
+    user-select: auto !important;
   }
 </style>
 
@@ -117,6 +123,9 @@ export default {
       } else {
         this.calls = this.originalCalls
       }
+    },
+    goToGitHub() {
+      window.open('https://github.com/tloyau/feedback-meeting', '_blank')
     }
   },
   watch: {

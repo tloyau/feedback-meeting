@@ -24,13 +24,14 @@
           :items="calls"
           :search="search"
           item-key="createdDate"
+          :rows-per-page-items="optionsRows"
         >
           <template slot="items" slot-scope="props">
             <td class="text-xs-center">{{ props.item.callHistory.RemoteNumber }}</td>
             <td class="text-xs-center"><a target="_blank" :href="getURL(props.item)">{{ props.item.codec.systemName }}</a></td>
             <td class="text-xs-center">{{ props.item.codec.ipAddress }} <br> {{ props.item.codec.macAddress }}</td>
             <td class="text-xs-center">{{ getDate(props.item.callHistory.StartTime) }}</td>
-            <td class="text-xs-center">{{ props.item.callHistory.Duration || '/' }}</td>
+            <td class="text-xs-center">{{ getMinutes(props.item.callHistory.Duration) }}</td>
             <td class="text-xs-center">{{ props.item.callHistory.Direction }}</td>
             <td class="text-xs-center">{{ props.item.callHistory.Protocol }}</td>
             <td class="text-xs-center">{{ props.item.callHistory.RoomAnalytics.PeopleCount }}</td>
@@ -69,7 +70,7 @@ export default {
         { text: 'Codec utilisé', value: 'codec.systemName', align: 'center' },
         { text: 'Adresse IP & MAC', value: 'codec.ipAddress', align: 'center' },
         { text: 'Date d\'appel', value: 'callHistory.StartTime', align: 'center' },
-        { text: 'Durée (sec.)', value: 'callHistory.Duration', align: 'center' },
+        { text: 'Durée (min.)', value: 'callHistory.Duration', align: 'center' },
         { text: 'Type d\'appel', value: 'callHistory.Direction', align: 'center' },
         { text: 'Protocol', value: 'callHistory.Protocol', align: 'center' },
         { text: 'People Presence', value: 'callHistory.RoomAnalytics.PeopleCount', align: 'center' },
@@ -77,7 +78,7 @@ export default {
         { text: 'Commentaires', value: 'feedbacks', align: 'center' },
         { text: 'Diagnostics', value: 'diagnostics', align: 'center' }
       ],
-      optionsRows: [{"text":"All","value":-1}]
+      optionsRows: [10, 25]
     }
   },
   components: {
@@ -93,6 +94,9 @@ export default {
     },
     getDate(value) {
       return moment(value).format("Do MMMM YYYY HH:mm:ss")
+    },
+    getMinutes(value) {
+      return Math.round(value / 60)
     },
     showDialog(codec) {
       this.codecSelected = codec

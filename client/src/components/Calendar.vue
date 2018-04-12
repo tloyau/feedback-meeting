@@ -25,12 +25,13 @@ export default {
       config: {
         defaultView: 'month',
         locale: 'fr',
+        eventLimit: true,
         height: 'parent',
         editable: false,
         header: {
-          left:   '',
+          left: '',
           center: 'title',
-          right:  ''
+          right: ''
         },
         displayEventTime: true,
         columnHeaderText: function(mom) {
