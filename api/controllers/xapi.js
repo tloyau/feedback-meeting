@@ -28,14 +28,10 @@ function launchProcess (codec, event) {
 
   if (event.CallDisconnect.Duration.Value > 0) {
     getCallHistoryId(xapi, function (callHistoryId) {
-      console.log(callHistoryId)
       getCallHistoryData(xapi, callHistoryId, function (callHistoryData) {
-        console.log(callHistoryData)
-
         callHistoryData.codec = codec
 
         createCall(callHistoryData, function (callId) {
-          console.log(callId)
           registerEvents(xapi, callId)
         })
       })
