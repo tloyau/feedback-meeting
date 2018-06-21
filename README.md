@@ -1,5 +1,7 @@
 # Feedback Meeting
 
+![](https://image.ibb.co/gV7Oeo/Capture_d_e_cran_2018_06_21_a_10_47_49.png)
+
 ## Introduction
 
 ### What is it ?
