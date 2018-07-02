@@ -145,6 +145,7 @@
                                 item-value="_id"
                                 return-object
                                 persistent-hint
+                                box
                               ></v-select>
                               <br>
                               <v-card>
@@ -226,6 +227,7 @@
                                 item-value="_id"
                                 return-object
                                 persistent-hint
+                                box
                               ></v-select>
                               <v-btn
                                 color="error"
