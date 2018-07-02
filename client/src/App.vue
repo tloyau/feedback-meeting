@@ -13,6 +13,7 @@
         </v-date-picker>
       </v-menu>
       <v-spacer></v-spacer>
+      <v-btn @click="dialogAdmin = true" color="teal" class="mr-3">Admin</v-btn>
       <v-btn @click="dialogCalls = true" color="teal" class="mr-3">Liste des Appels</v-btn>
       <v-toolbar-items>
         <v-btn flat @click="goToGitHub">Github Repo</v-btn>
@@ -31,6 +32,13 @@
             scrollable>
             <Calls :calls="originalCalls" v-on:dialogCalls="dialogCallsCloseEvent"/>
           </v-dialog>
+          <v-dialog v-model="dialogAdmin" 
+            fullscreen
+            transition="dialog-bottom-transition"
+            :overlay="false"
+            scrollable>
+            <Admin :codecs="codecs" v-on:dialogAdmin="dialogAdminCloseEvent" v-on:refreshCodecs="refreshCodecs"/>
+          </v-dialog>
           <v-flex md6 xs12 class="pa-0">
             <v-layout column class="ma-0">
               <GlobalInfo :dateFormat="dateFormat" :date="date" :calls="calls"/>
@@ -47,43 +55,45 @@
 </template>
 
 <style>
-  .full-width {
-    width: 100%;
-  }
-  .fill-height {
-    height: 100% !important;
-  }
-  .no-padding {
-    padding: 0 !important;
-  }
-  .flex-without-grow {
-    flex: 0 1 auto !important;
-  }
-  .flex-with-grow {
-    flex: 1 1 auto !important;
-  }
-  .list__tile {
-    user-select: auto !important;
-  }
+.full-width {
+  width: 100%;
+}
+.fill-height {
+  height: 100% !important;
+}
+.no-padding {
+  padding: 0 !important;
+}
+.flex-without-grow {
+  flex: 0 1 auto !important;
+}
+.flex-with-grow {
+  flex: 1 1 auto !important;
+}
+.list__tile {
+  user-select: auto !important;
+}
 </style>
 
 <script>
-import Calendar from './components/Calendar'
-import GlobalInfo from './components/GlobalInfo'
-import CallDetails from './components/CallDetails'
-import Chart from './components/Chart'
-import Calls from './components/Calls'
-import Api from './services/Api'
+import Calendar from "./components/Calendar";
+import GlobalInfo from "./components/GlobalInfo";
+import CallDetails from "./components/CallDetails";
+import Chart from "./components/Chart";
+import Calls from "./components/Calls";
+import Admin from "./components/Admin";
+import Api from "./services/Api";
 
-import moment from 'moment'
+import moment from "moment";
 
 export default {
-  data () {
+  data() {
     return {
-      title: 'Feedback Meeting',
+      title: "Feedback Meeting",
       dialogCallDetails: false,
       dialogDiagnostics: false,
       dialogCalls: false,
+      dialogAdmin: false,
       date: null,
       dateFormat: null,
       menu: false,
@@ -91,78 +101,94 @@ export default {
       originalCalls: [],
       callSelected: null,
       codecs: []
-    }
+    };
   },
-  name: 'App',
+  name: "App",
   components: {
     Calendar,
     GlobalInfo,
     CallDetails,
     Chart,
-    Calls
+    Calls,
+    Admin
   },
-  created () {
-    this.date = moment().format("YYYY-MM")
+  created() {
+    this.date = moment().format("YYYY-MM");
   },
   methods: {
     handleEvent(event) {
-      this.callSelected = event
-      this.dialogCallDetails = true
+      this.callSelected = event;
+      this.dialogCallDetails = true;
     },
     jsUcfirst(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1)
+      return string.charAt(0).toUpperCase() + string.slice(1);
     },
     dialogCallsCloseEvent() {
-      this.dialogCalls = false
+      this.dialogCalls = false;
+    },
+    dialogAdminCloseEvent() {
+      this.dialogAdmin = false;
     },
     handleClickOnChartEvent(index) {
       if (index != -1) {
-        this.calls = this.calls.filter(function (call) {
-          return call.rate === (index + 1)
-        })
+        this.calls = this.calls.filter(function(call) {
+          return call.rate === index + 1;
+        });
       } else {
-        this.calls = this.originalCalls
+        this.calls = this.originalCalls;
       }
     },
     goToGitHub() {
-      window.open('https://github.com/tloyau/feedback-meeting', '_blank')
+      window.open("https://github.com/tloyau/feedback-meeting", "_blank");
+    },
+    refreshCodecs() {
+      Api()
+        .get("codec")
+        .then(response => {
+          this.codecs = response.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   },
   watch: {
-    date: function (val) {
-      this.dateFormat = this.jsUcfirst(moment(val).format("MMMM YYYY"))   
+    date: function(val) {
+      this.dateFormat = this.jsUcfirst(moment(val).format("MMMM YYYY"));
     }
   },
   sockets: {
-    newCall: function (newCallData) {
-      this.originalCalls.push(newCallData)
-      this.calls = this.originalCalls
+    newCall: function(newCallData) {
+      this.originalCalls.push(newCallData);
+      this.calls = this.originalCalls;
     },
-    updateCall: function (newCallData) {
+    updateCall: function(newCallData) {
       for (var call in this.originalCalls) {
         if (this.originalCalls[call]._id === newCallData._id) {
-          this.originalCalls[call] = newCallData
+          this.originalCalls[call] = newCallData;
         }
       }
     }
   },
-  mounted () {
-    Api().get('call')
+  mounted() {
+    Api()
+      .get("call")
       .then(response => {
-        this.calls = response.data
-        this.originalCalls = response.data
+        this.calls = response.data;
+        this.originalCalls = response.data;
       })
       .catch(e => {
-        console.log(e)
-      })
+        console.log(e);
+      });
 
-    Api().get('codec')
+    Api()
+      .get("codec")
       .then(response => {
-        this.codecs = response.data
+        this.codecs = response.data;
       })
       .catch(e => {
-        console.log(e)
-      })
+        console.log(e);
+      });
   }
-}
+};
 </script>

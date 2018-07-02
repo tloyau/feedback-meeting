@@ -16,8 +16,8 @@ import momentFR from 'moment/locale/fr'
 import VueCharts from 'vue-chartjs'
 
 import VueSocketio from 'vue-socket.io'
-Vue.use(VueSocketio, 'http://144.254.51.227:15140');
 
+Vue.use(VueSocketio, 'http://144.254.51.227:15140')
 Vue.use(Vuetify)
 Vue.use(FullCalendar)
 Vue.use(moment, {

@@ -19,6 +19,11 @@ module.exports = function (app, io) {
 
   app.route('/api/codec')
     .get(codec.getCodecs)
+    .post(codec.createACodec)
+    .put(codec.updateCodec)
+
+  app.route('/api/codec/:id')
+    .delete(codec.deleteCodec)
 
   app.route('/api/codec/:mac')
     .get(codec.getOneCodec)

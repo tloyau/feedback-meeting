@@ -25,6 +25,12 @@ var CodecSchema = new Schema({
   },
   uri: {
     type: String
+  },
+  error: {
+    type: Boolean
+  },
+  messageError: {
+    type: String
   }
 })
 
